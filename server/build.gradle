@@ -22,8 +22,8 @@ ext {
 dependencies {
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
     implementation "io.quarkus:quarkus-arc:${quarkusPlatformVersion}"
-    implementation "io.quarkus:quarkus-resteasy-reactive:${quarkusPlatformVersion}"
-    implementation("io.quarkus:quarkus-picocli:${quarkusPlatformVersion}")
+    implementation "io.quarkus:quarkus-resteasy-reactive-jackson:${quarkusPlatformVersion}"
+    // implementation("io.quarkus:quarkus-picocli:${quarkusPlatformVersion}")
 
 
     implementation "com.google.guava:guava:${guavaVersion}"
