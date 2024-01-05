@@ -1,0 +1,82 @@
+plugins {
+    id 'java'
+    id 'io.quarkus'
+    id 'jacoco'
+    id 'eclipse'
+    id 'com.diffplug.spotless' version '6.23.3'
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+ext {
+    assertjVersion = '3.11.1'
+    guavaVersion = '33.0.0-jre'
+    immutablesVersion = '2.9.2'
+    jimfsVersion = '1.3.0'
+    jqwikVersion = '1.8.2'
+}
+
+dependencies {
+    implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
+    implementation "io.quarkus:quarkus-arc:${quarkusPlatformVersion}"
+    implementation "io.quarkus:quarkus-resteasy-reactive:${quarkusPlatformVersion}"
+    implementation("io.quarkus:quarkus-picocli:${quarkusPlatformVersion}")
+
+
+    implementation "com.google.guava:guava:${guavaVersion}"
+
+    // Immtutables
+    annotationProcessor "org.immutables:value:${immutablesVersion}"
+    compileOnly "org.immutables:value:${immutablesVersion}"
+    compileOnly "org.immutables:builder:${immutablesVersion}"
+
+    // Test libraries
+    testImplementation "io.quarkus:quarkus-junit5:${quarkusPlatformVersion}"
+    testImplementation "io.quarkus:quarkus-junit5-mockito:${quarkusPlatformVersion}"
+    testImplementation "io.rest-assured:rest-assured:${quarkusPlatformVersion}"
+
+    testImplementation "net.jqwik:jqwik:${jqwikVersion}"
+    testImplementation "org.assertj:assertj-core:${assertjVersion}"
+    testImplementation "com.google.jimfs:jimfs:${jimfsVersion}"
+}
+
+group 'vincebae'
+version '1.0.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+test {
+    systemProperty "java.util.logging.manager", "org.jboss.logmanager.LogManager"
+    finalizedBy jacocoTestReport
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << '-parameters'
+}
+
+compileTestJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs += '-parameters'
+}
+
+spotless {
+    java {
+        googleJavaFormat()
+    }
+    groovyGradle {
+		target '*.gradle', 'gradle/*.gradle'
+	}
+
+}
+
+jacocoTestReport {
+    dependsOn test
+}
+
