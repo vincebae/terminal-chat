@@ -8,5 +8,6 @@ pluginManagement {
         id "${quarkusPluginId}" version "${quarkusPluginVersion}"
     }
 }
-rootProject.name='quarkus_template'
-include('app')
+rootProject.name='chat'
+include('server')
+include('client')
