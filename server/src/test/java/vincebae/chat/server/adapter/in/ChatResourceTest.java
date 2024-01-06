@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
+import vincebae.chat.shared.message.SendRequestBuilder;
+import vincebae.chat.shared.message.SendResponse;
 
 /** Tests for {@code ChatResource}. */
 @QuarkusTest

@@ -9,5 +9,7 @@ pluginManagement {
     }
 }
 rootProject.name='chat'
-include('server')
-include('client')
+
+include 'shared'
+include 'server'
+include 'client'

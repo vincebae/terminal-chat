@@ -20,13 +20,8 @@ ext {
 }
 
 dependencies {
-    implementation project(":shared")
-
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
     implementation "io.quarkus:quarkus-arc:${quarkusPlatformVersion}"
-    implementation "io.quarkus:quarkus-resteasy-reactive-jackson:${quarkusPlatformVersion}"
-    // implementation("io.quarkus:quarkus-picocli:${quarkusPlatformVersion}")
-
 
     implementation "com.google.guava:guava:${guavaVersion}"
 
@@ -38,7 +33,6 @@ dependencies {
     // Test libraries
     testImplementation "io.quarkus:quarkus-junit5:${quarkusPlatformVersion}"
     testImplementation "io.quarkus:quarkus-junit5-mockito:${quarkusPlatformVersion}"
-    testImplementation "io.rest-assured:rest-assured:${quarkusPlatformVersion}"
 
     testImplementation "net.jqwik:jqwik:${jqwikVersion}"
     testImplementation "org.assertj:assertj-core:${assertjVersion}"
@@ -53,12 +47,6 @@ java {
     targetCompatibility = JavaVersion.VERSION_21
 }
 
-sourceSets {
-    // main {
-    //     java {}
-    // }
-}
-
 test {
     systemProperty "java.util.logging.manager", "org.jboss.logmanager.LogManager"
     finalizedBy jacocoTestReport
@@ -66,7 +54,7 @@ test {
 
 compileJava {
     options.encoding = 'UTF-8'
-    options.compilerArgs << '-parameters'
+    options.compilerArgs += ["-Aproject=${project.group}/${project.name}", '-parameters']
 }
 
 compileTestJava {

@@ -1,4 +1,4 @@
-package vincebae.chat.server.adapter.in;
+package vincebae.chat.shared.message;
 
 import org.immutables.builder.Builder;
 

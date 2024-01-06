@@ -7,6 +7,8 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import vincebae.chat.shared.message.SendRequest;
+import vincebae.chat.shared.message.SendResponse;
 
 @Path("/chat")
 public class ChatResource {
