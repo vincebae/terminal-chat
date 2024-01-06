@@ -1,4 +1,5 @@
 plugins {
+    id 'application'
     id 'java'
     id 'io.quarkus'
     id 'jacoco'
@@ -22,9 +23,7 @@ ext {
 dependencies {
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
     implementation "io.quarkus:quarkus-arc:${quarkusPlatformVersion}"
-    implementation "io.quarkus:quarkus-resteasy-reactive:${quarkusPlatformVersion}"
     implementation("io.quarkus:quarkus-picocli:${quarkusPlatformVersion}")
-
 
     implementation "com.google.guava:guava:${guavaVersion}"
 
@@ -36,7 +35,6 @@ dependencies {
     // Test libraries
     testImplementation "io.quarkus:quarkus-junit5:${quarkusPlatformVersion}"
     testImplementation "io.quarkus:quarkus-junit5-mockito:${quarkusPlatformVersion}"
-    testImplementation "io.rest-assured:rest-assured:${quarkusPlatformVersion}"
 
     testImplementation "net.jqwik:jqwik:${jqwikVersion}"
     testImplementation "org.assertj:assertj-core:${assertjVersion}"
@@ -51,6 +49,10 @@ java {
     targetCompatibility = JavaVersion.VERSION_21
 }
 
+application {
+    mainClass = 'vincebae.chat.client.Main'
+}
+
 test {
     systemProperty "java.util.logging.manager", "org.jboss.logmanager.LogManager"
     finalizedBy jacocoTestReport
@@ -58,7 +60,7 @@ test {
 
 compileJava {
     options.encoding = 'UTF-8'
-    options.compilerArgs << '-parameters'
+    options.compilerArgs += ["-Aproject=${project.group}/${project.name}", '-parameters']
 }
 
 compileTestJava {

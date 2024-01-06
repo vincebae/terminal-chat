@@ -19,25 +19,23 @@ class ChatResourceTest {
 
   @Test
   void sendMessageEndpointTest() {
-    final var sendRequest = 
-      new SendRequestBuilder()
-        .sender("sender name")
-        .message("some message")
-        .build();
+    final var sendRequest =
+        new SendRequestBuilder().sender("sender name").message("some message").build();
 
     final var body =
-      given().header("Content-type", "application/json")
-      .and()
-      .body(sendRequest)
-      .when().post("/chat/send")
-      .then()
-      .statusCode(200)
-      .extract()
-      .body()
-      .as(SendResponse.class);
+        given()
+            .header("Content-type", "application/json")
+            .and()
+            .body(sendRequest)
+            .when()
+            .post("/chat/send")
+            .then()
+            .statusCode(200)
+            .extract()
+            .body()
+            .as(SendResponse.class);
 
     final var expected = new SendResponse("received: some message, from sender name");
     assertThat(body).isEqualTo(expected);
   }
-
 }
