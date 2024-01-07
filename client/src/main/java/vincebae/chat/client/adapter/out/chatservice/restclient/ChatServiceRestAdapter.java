@@ -1,8 +1,8 @@
-package vincebae.chat.client.adapter.out.restclient;
+package vincebae.chat.client.adapter.out.chatservice.restclient;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import vincebae.chat.client.app.port.out.ChatService;
+import vincebae.chat.client.app.outport.ChatService;
 import vincebae.chat.shared.message.SendRequest;
 import vincebae.chat.shared.message.SendResponse;
 

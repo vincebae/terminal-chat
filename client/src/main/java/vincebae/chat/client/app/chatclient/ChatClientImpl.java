@@ -1,13 +1,13 @@
-package vincebae.chat.client.app;
+package vincebae.chat.client.app.chatclient;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
-import vincebae.chat.client.app.ChatClientConfig.ChatClientParams;
-import vincebae.chat.client.app.port.in.ChatClient;
-import vincebae.chat.client.app.port.out.ChatService;
+import vincebae.chat.client.app.chatclient.ChatClientConfig.ChatClientParams;
+import vincebae.chat.client.app.inport.ChatClient;
+import vincebae.chat.client.app.outport.ChatService;
 import vincebae.chat.shared.message.SendRequestBuilder;
 
 @ApplicationScoped

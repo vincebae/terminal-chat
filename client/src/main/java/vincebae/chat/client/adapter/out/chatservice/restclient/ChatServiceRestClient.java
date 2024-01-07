@@ -1,4 +1,4 @@
-package vincebae.chat.client.adapter.out.restclient;
+package vincebae.chat.client.adapter.out.chatservice.restclient;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;

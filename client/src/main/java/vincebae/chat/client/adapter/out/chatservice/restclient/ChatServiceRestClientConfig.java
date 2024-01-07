@@ -1,4 +1,4 @@
-package vincebae.chat.client.adapter.out.restclient;
+package vincebae.chat.client.adapter.out.chatservice.restclient;
 
 import io.quarkus.rest.client.reactive.QuarkusRestClientBuilder;
 import jakarta.enterprise.context.ApplicationScoped;

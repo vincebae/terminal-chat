@@ -6,7 +6,7 @@ import jakarta.inject.Inject;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
-import vincebae.chat.client.app.port.in.ChatClient;
+import vincebae.chat.client.app.inport.ChatClient;
 
 /** Entry point of the chat client application. */
 @QuarkusMain

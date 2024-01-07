@@ -1,4 +1,4 @@
-package vincebae.chat.client.app.port.out;
+package vincebae.chat.client.app.outport;
 
 import vincebae.chat.shared.message.SendRequest;
 import vincebae.chat.shared.message.SendResponse;
