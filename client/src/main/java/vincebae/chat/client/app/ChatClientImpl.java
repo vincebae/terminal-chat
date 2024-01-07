@@ -1,16 +1,17 @@
-package vincebae.chat.client.adapter.in;
+package vincebae.chat.client.app;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
-import vincebae.chat.client.adapter.in.ChatClientConfig.ChatClientParams;
+import vincebae.chat.client.app.ChatClientConfig.ChatClientParams;
+import vincebae.chat.client.app.port.in.ChatClient;
 import vincebae.chat.client.app.port.out.ChatService;
 import vincebae.chat.shared.message.SendRequestBuilder;
 
 @ApplicationScoped
-public final class ChatClient {
+public final class ChatClientImpl implements ChatClient {
 
   private static final String USER_PROMPT = "> ";
   private static final String EXIT_COMMAND = "/q";
@@ -20,7 +21,7 @@ public final class ChatClient {
   private final ChatService chatService;
 
   @Inject
-  ChatClient(
+  ChatClientImpl(
       @ChatClientParams InputStream inputStream,
       @ChatClientParams PrintStream printStream,
       ChatService chatService) {
@@ -29,7 +30,8 @@ public final class ChatClient {
     this.chatService = chatService;
   }
 
-  public void run() {
+  @Override
+  public void start(String name, String session) {
     try (final var scanner = new Scanner(inputStream)) {
       printPrompt();
       while (scanner.hasNextLine()) {

@@ -1,4 +1,4 @@
-package vincebae.chat.client.adapter.in;
+package vincebae.chat.client.app;
 
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Qualifier;
