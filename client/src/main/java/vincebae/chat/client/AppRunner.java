@@ -2,10 +2,11 @@ package vincebae.chat.client;
 
 import io.quarkus.runtime.QuarkusApplication;
 import io.quarkus.runtime.annotations.QuarkusMain;
+import jakarta.inject.Inject;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
-import vincebae.chat.shared.message.SendRequest;
+import vincebae.chat.client.adapter.in.ChatClient;
 
 /** Entry point of the chat client application. */
 @QuarkusMain
@@ -17,14 +18,19 @@ public class AppRunner implements QuarkusApplication, Runnable {
       description = "Name")
   private String name;
 
+  private final ChatClient chatClient;
+
+  @Inject
+  AppRunner(ChatClient chatClient) {
+    this.chatClient = chatClient;
+  }
+
   /** Entry point of Picocli. */
   @Override
   public void run() {
     System.out.println("Terminal chat client started.");
-    System.out.println("Name: " + name);
+    chatClient.run();
     System.out.println("Terminal chat client stopping...");
-    final var request = new SendRequest(name, "message");
-    System.out.println("request: " + request);
   }
 
   /** Entry point of Quarkus Main. */

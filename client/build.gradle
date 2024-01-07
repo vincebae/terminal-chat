@@ -1,94 +1,34 @@
 plugins {
-    id 'application'
-    id 'java'
-    id 'io.quarkus'
-    id 'jacoco'
-    id 'eclipse'
-    id 'com.diffplug.spotless' version '6.23.3'
-}
-
-repositories {
-    mavenCentral()
-    mavenLocal()
-}
-
-ext {
-    assertjVersion = '3.11.1'
-    guavaVersion = '33.0.0-jre'
-    immutablesVersion = '2.9.2'
-    jimfsVersion = '1.3.0'
-    jqwikVersion = '1.8.2'
+	id 'chat.java-conventions'
+	id 'io.quarkus'
+	id 'com.diffplug.spotless' version '6.23.3'
 }
 
 dependencies {
-    implementation project(":shared")
+	implementation project(":shared")
 
-    implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
-    implementation "io.quarkus:quarkus-arc:${quarkusPlatformVersion}"
-    implementation("io.quarkus:quarkus-picocli:${quarkusPlatformVersion}")
+	implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
+	implementation "io.quarkus:quarkus-arc:${quarkusPlatformVersion}"
+	implementation("io.quarkus:quarkus-picocli:${quarkusPlatformVersion}")
+	implementation("io.quarkus:quarkus-rest-client-reactive-jackson:${quarkusPlatformVersion}")
 
-    implementation "com.google.guava:guava:${guavaVersion}"
-
-    // Immtutables
-    annotationProcessor "org.immutables:value:${immutablesVersion}"
-    compileOnly "org.immutables:value:${immutablesVersion}"
-    compileOnly "org.immutables:builder:${immutablesVersion}"
-
-    // Test libraries
-    testImplementation "io.quarkus:quarkus-junit5:${quarkusPlatformVersion}"
-    testImplementation "io.quarkus:quarkus-junit5-mockito:${quarkusPlatformVersion}"
-
-    testImplementation "net.jqwik:jqwik:${jqwikVersion}"
-    testImplementation "org.assertj:assertj-core:${assertjVersion}"
-    testImplementation "com.google.jimfs:jimfs:${jimfsVersion}"
+	// Test libraries
+	testImplementation "io.quarkus:quarkus-junit5:${quarkusPlatformVersion}"
+	testImplementation "io.quarkus:quarkus-junit5-mockito:${quarkusPlatformVersion}"
 }
 
-group 'vincebae'
-version '1.0.0-SNAPSHOT'
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
-}
-
-application {
-    mainClass = 'vincebae.chat.client.Main'
-}
-
-// sourceSets {
-//     main {
-//         java {
-//             // srcDir project(":server").sourceSets.main.java
-//         }
-//     }
-// }
-
-test {
-    systemProperty "java.util.logging.manager", "org.jboss.logmanager.LogManager"
-    finalizedBy jacocoTestReport
-}
 
 compileJava {
-    options.encoding = 'UTF-8'
-    options.compilerArgs += ["-Aproject=${project.group}/${project.name}", '-parameters']
-}
-
-compileTestJava {
-    options.encoding = 'UTF-8'
-    options.compilerArgs += '-parameters'
+	options.compilerArgs += "-Aproject=${project.group}/${project.name}"
 }
 
 spotless {
-    java {
-        googleJavaFormat()
-    }
-    groovyGradle {
-		target '*.gradle', 'gradle/*.gradle'
+	java {
+		googleJavaFormat()
 	}
 
+	groovyGradle {
+		target '*.gradle', 'gradle/*.gradle'
+		greclipse()
+	}
 }
-
-jacocoTestReport {
-    dependsOn test
-}
-
