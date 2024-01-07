@@ -54,7 +54,7 @@ public final class ChatClientImpl implements ChatClient {
         if (line.equals(EXIT_COMMAND)) {
           break;
         }
-        final var reply = message(line);
+        final var reply = message(name, line);
         printStream.println(reply);
         printPrompt(name);
       }
@@ -66,9 +66,8 @@ public final class ChatClientImpl implements ChatClient {
     return "random-name";
   }
 
-  private String message(String line) {
-    final var messageRequest =
-        new MessageRequestBuilder().sender("mock sender").message(line).build();
+  private String message(String name, String line) {
+    final var messageRequest = new MessageRequestBuilder().sender(name).message(line).build();
     final var messageResponse = chatService.message(messageRequest);
     return messageResponse.result().toString();
   }
