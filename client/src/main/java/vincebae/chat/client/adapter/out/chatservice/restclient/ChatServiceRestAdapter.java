@@ -2,9 +2,11 @@ package vincebae.chat.client.adapter.out.chatservice.restclient;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import vincebae.chat.client.app.outport.ChatService;
-import vincebae.chat.shared.message.SendRequest;
-import vincebae.chat.shared.message.SendResponse;
+import vincebae.chat.client.app.port.out.ChatService;
+import vincebae.chat.shared.payload.chat.MessageRequest;
+import vincebae.chat.shared.payload.chat.MessageResponse;
+import vincebae.chat.shared.payload.chat.SessionRequest;
+import vincebae.chat.shared.payload.chat.SessionResponse;
 
 /** Output adapter to Chat server using REST protocol. */
 @ApplicationScoped
@@ -18,7 +20,12 @@ class ChatServiceRestAdapter implements ChatService {
   }
 
   @Override
-  public SendResponse send(SendRequest request) {
-    return chatServerRestClient.send(request);
+  public SessionResponse session(SessionRequest request) {
+    return chatServerRestClient.session(request);
+  }
+
+  @Override
+  public MessageResponse message(MessageRequest request) {
+    return chatServerRestClient.message(request);
   }
 }

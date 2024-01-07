@@ -3,10 +3,11 @@ package vincebae.chat.client.adapter.in;
 import io.quarkus.runtime.QuarkusApplication;
 import io.quarkus.runtime.annotations.QuarkusMain;
 import jakarta.inject.Inject;
+import java.util.Optional;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
-import vincebae.chat.client.app.inport.ChatClient;
+import vincebae.chat.client.app.port.in.ChatClient;
 
 /** Entry point of the chat client application. */
 @QuarkusMain
@@ -34,7 +35,7 @@ public class AppRunner implements QuarkusApplication, Runnable {
   @Override
   public void run() {
     System.out.println("Terminal chat client started.");
-    chatClient.start(name, session);
+    chatClient.start(Optional.ofNullable(name), Optional.ofNullable(session));
     System.out.println("Terminal chat client stopping...");
   }
 

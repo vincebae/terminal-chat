@@ -4,11 +4,13 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.Optional;
 import java.util.Scanner;
 import vincebae.chat.client.app.chatclient.ChatClientConfig.ChatClientParams;
-import vincebae.chat.client.app.inport.ChatClient;
-import vincebae.chat.client.app.outport.ChatService;
-import vincebae.chat.shared.message.SendRequestBuilder;
+import vincebae.chat.client.app.port.in.ChatClient;
+import vincebae.chat.client.app.port.out.ChatService;
+import vincebae.chat.shared.payload.chat.MessageRequestBuilder;
+import vincebae.chat.shared.payload.chat.SessionRequest;
 
 @ApplicationScoped
 public final class ChatClientImpl implements ChatClient {
@@ -31,30 +33,47 @@ public final class ChatClientImpl implements ChatClient {
   }
 
   @Override
-  public void start(String name, String session) {
+  public void start(Optional<String> name, Optional<String> session) {
+    final var nameString = name.orElseGet(this::randomName);
+    connectToSession(nameString, session);
+    chatLoop(nameString);
+  }
+
+  private void connectToSession(String nameString, Optional<String> session) {
+    final var sessionRequest = new SessionRequest(nameString, session);
+    final var sessionResponse = chatService.session(sessionRequest);
+    printStream.println("Session response: " + sessionResponse);
+  }
+
+  private void chatLoop(String name) {
     try (final var scanner = new Scanner(inputStream)) {
-      printPrompt();
+      printPrompt(name);
       while (scanner.hasNextLine()) {
         printStream.flush();
         final var line = scanner.nextLine();
         if (line.equals(EXIT_COMMAND)) {
           break;
         }
-        final var reply = sendMessage(line);
+        final var reply = message(line);
         printStream.println(reply);
-        printPrompt();
+        printPrompt(name);
       }
     }
     printStream.println("Exit chat");
   }
 
-  private String sendMessage(String line) {
-    final var sendRequest = new SendRequestBuilder().sender("mock sender").message(line).build();
-    final var sendResponse = chatService.send(sendRequest);
-    return sendResponse.message();
+  private String randomName() {
+    return "random-name";
   }
 
-  private void printPrompt() {
+  private String message(String line) {
+    final var messageRequest =
+        new MessageRequestBuilder().sender("mock sender").message(line).build();
+    final var messageResponse = chatService.message(messageRequest);
+    return messageResponse.result().toString();
+  }
+
+  private void printPrompt(String name) {
     printStream.print(USER_PROMPT);
   }
 }

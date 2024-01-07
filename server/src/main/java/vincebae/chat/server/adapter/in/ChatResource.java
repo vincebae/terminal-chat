@@ -7,8 +7,12 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import vincebae.chat.shared.message.SendRequest;
-import vincebae.chat.shared.message.SendResponse;
+import java.util.Optional;
+import vincebae.chat.shared.payload.chat.MessageRequest;
+import vincebae.chat.shared.payload.chat.MessageResponse;
+import vincebae.chat.shared.payload.chat.Result;
+import vincebae.chat.shared.payload.chat.SessionRequest;
+import vincebae.chat.shared.payload.chat.SessionResponse;
 
 @Path("/chat")
 public class ChatResource {
@@ -21,13 +25,22 @@ public class ChatResource {
   }
 
   @POST
-  @Path("/send")
+  @Path("/session")
   @Consumes(MediaType.APPLICATION_JSON)
-  public SendResponse send(SendRequest request) {
-    Log.info("Received send request: " + request);
-    final var message = String.format("received: %s, from %s", request.message(), request.sender());
-    final var response = new SendResponse(message);
-    Log.info("Response: " + response);
+  public SessionResponse session(SessionRequest request) {
+    Log.info("Received session request: " + request);
+    final var response = new SessionResponse(Result.OK, Optional.of("abcde"));
+    Log.info("Sent session response: " + response);
+    return response;
+  }
+
+  @POST
+  @Path("/message")
+  @Consumes(MediaType.APPLICATION_JSON)
+  public MessageResponse message(MessageRequest request) {
+    Log.info("Received message request: " + request);
+    final var response = new MessageResponse(Result.OK);
+    Log.info("Sent message response: " + response);
     return response;
   }
 }

@@ -5,8 +5,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
-import vincebae.chat.shared.message.SendRequestBuilder;
-import vincebae.chat.shared.message.SendResponse;
+import vincebae.chat.shared.payload.chat.MessageRequestBuilder;
+import vincebae.chat.shared.payload.chat.MessageResponse;
+import vincebae.chat.shared.payload.chat.Result;
 
 /** Tests for {@code ChatResource}. */
 @QuarkusTest
@@ -22,7 +23,7 @@ class ChatResourceTest {
   @Test
   void sendMessageEndpointTest() {
     final var sendRequest =
-        new SendRequestBuilder().sender("sender name").message("some message").build();
+        new MessageRequestBuilder().sender("sender name").message("some message").build();
 
     final var body =
         given()
@@ -30,14 +31,14 @@ class ChatResourceTest {
             .and()
             .body(sendRequest)
             .when()
-            .post("/chat/send")
+            .post("/chat/message")
             .then()
             .statusCode(200)
             .extract()
             .body()
-            .as(SendResponse.class);
+            .as(MessageResponse.class);
 
-    final var expected = new SendResponse("received: some message, from sender name");
+    final var expected = new MessageResponse(Result.OK);
     assertThat(body).isEqualTo(expected);
   }
 }
