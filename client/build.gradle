@@ -4,6 +4,8 @@ plugins {
 	id 'com.diffplug.spotless' version '6.23.3'
 }
 
+ext {}
+
 dependencies {
 	implementation project(":shared")
 
@@ -22,11 +24,23 @@ compileJava {
 	options.compilerArgs += "-Aproject=${project.group}/${project.name}"
 }
 
+sourceSets {
+	main {
+		java {
+			srcDirs = [
+				"src/main/java",
+				"build/generated/sources/annotationProcessor/java/main",
+				"../shared/build/generated/sources/annotationProcessor/java/main"
+			]
+		}
+	}
+}
+
 spotless {
 	java {
+		target "src/main/java/**/*.java"
 		googleJavaFormat()
 	}
-
 	groovyGradle {
 		target '*.gradle', 'gradle/*.gradle'
 		greclipse()

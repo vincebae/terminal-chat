@@ -18,11 +18,23 @@ dependencies {
 	testImplementation "io.rest-assured:rest-assured:${quarkusPlatformVersion}"
 }
 
+sourceSets {
+	main {
+		java {
+			srcDirs = [
+				"src/main/java",
+				"build/generated/sources/annotationProcessor/java/main",
+				"../shared/build/generated/sources/annotationProcessor/java/main"
+			]
+		}
+	}
+}
+
 spotless {
 	java {
+		target "src/main/java/**/*.java"
 		googleJavaFormat()
 	}
-
 	groovyGradle {
 		target '*.gradle', 'gradle/*.gradle'
 		greclipse()

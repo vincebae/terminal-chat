@@ -4,13 +4,7 @@ plugins {
 	id 'com.diffplug.spotless' version '6.23.3'
 }
 
-ext {
-	assertjVersion = '3.11.1'
-	guavaVersion = '33.0.0-jre'
-	immutablesVersion = '2.9.2'
-	jimfsVersion = '1.3.0'
-	jqwikVersion = '1.8.2'
-}
+ext {}
 
 dependencies {
 	implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
@@ -32,10 +26,6 @@ dependencies {
 	testImplementation "com.google.jimfs:jimfs:${jimfsVersion}"
 }
 
-// compileJava {
-//     dependsOn "spotlessApply"
-// }
-//
 spotless {
 	java {
 		googleJavaFormat()
